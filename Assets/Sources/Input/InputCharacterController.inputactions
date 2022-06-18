@@ -1,0 +1,55 @@
+{
+    "name": "InputCharacterController",
+    "maps": [
+        {
+            "name": "PlayerController",
+            "id": "520e4a39-3a0b-450d-a456-3901718fca65",
+            "actions": [
+                {
+                    "name": "MoveActions",
+                    "type": "PassThrough",
+                    "id": "f1b8e211-ce83-48fa-8726-cf1d51ec808e",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "1D Axis",
+                    "id": "9ef28942-cd03-488f-b637-83b21667b3f3",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveActions",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "5717e9d9-cf05-439a-b403-c6fa4547464c",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveActions",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "3032cd7e-d859-4012-a7d3-7a797ff3d7bb",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveActions",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
