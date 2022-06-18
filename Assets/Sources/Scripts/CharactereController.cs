@@ -17,6 +17,7 @@ namespace FroggyJump
     [RequireComponent(typeof(Rigidbody))]
     public class CharactereController : Charactere
     {
+        public const string TAG_PLAYER = "Player";
 
         private InputCharacterController inputCharacterController;
         private BuoyancyObjact buoyancyPlayer;
@@ -26,7 +27,7 @@ namespace FroggyJump
         private Vector3 moveDirection = Vector3.zero;
 
         [SerializeField]
-        private float force;
+        private float force, speed;
         
         [SerializeField]
         [Range(0.1f,10f)]
@@ -74,6 +75,7 @@ namespace FroggyJump
                 rb.AddForce(moveDirection * force * Time.deltaTime, ForceMode.Impulse);
                 rb.AddForceAtPosition(Vector3.up * upForce, transform.position);
             }
+         
         }
         public override void Jump(InputAction.CallbackContext ctx)
         {
@@ -81,7 +83,6 @@ namespace FroggyJump
             if (canJump)
             {
                 playerToJump.GetComponent<Rigidbody>().AddForce(Vector3.up * jumpValue);
-              //  buoyancyPlayer.UpdateWaterheight(1.12f);
                 canJump = false;
             }
         }
@@ -121,7 +122,6 @@ namespace FroggyJump
         {
             if(collision.gameObject.tag == "Player_Frog")
             {
-                //buoyancyPlayer.UpdateWaterheight(1.64f);
                 canJump = true;
             }
         }
