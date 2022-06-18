@@ -19,6 +19,7 @@ namespace FroggyJump
     {
 
         private InputCharacterController inputCharacterController;
+        private BuoyancyObjact buoyancyPlayer;
 
         private Rigidbody rb;
 
@@ -28,15 +29,24 @@ namespace FroggyJump
         private float force;
         
         [SerializeField]
-        [Range(0.1f,1f)]
+        [Range(0.1f,10f)]
         private float upForce = 0.2f;
+
+        [SerializeField]
+        private GameObject playerToJump;
+        [SerializeField]
+        private float jumpValue = 1f;
+
+        private bool canJump = true;
 
         void Awake() {
 
             rb = GetComponent<Rigidbody>();
+            buoyancyPlayer = GetComponent<BuoyancyObjact>();
 
             this.inputCharacterController = new InputCharacterController();
             this.inputCharacterController.PlayerController.MoveActions.performed += Move;
+            inputCharacterController.PlayerController.Jump.performed += Jump;
         }
 
         // Start is called before the first frame update
@@ -65,7 +75,16 @@ namespace FroggyJump
                 rb.AddForceAtPosition(Vector3.up * upForce, transform.position);
             }
         }
-        
+        public override void Jump(InputAction.CallbackContext ctx)
+        {
+            Debug.Log("jump");
+            if (canJump)
+            {
+                playerToJump.GetComponent<Rigidbody>().AddForce(Vector3.up * jumpValue);
+              //  buoyancyPlayer.UpdateWaterheight(1.12f);
+                canJump = false;
+            }
+        }
 
         public override void Eat()
         {
@@ -96,6 +115,15 @@ namespace FroggyJump
 
         void OnDisable() {
             this.inputCharacterController.PlayerController.Disable();
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if(collision.gameObject.tag == "Player_Frog")
+            {
+                //buoyancyPlayer.UpdateWaterheight(1.64f);
+                canJump = true;
+            }
         }
 
     }

@@ -68,5 +68,10 @@ namespace FroggyJump
                 rb.angularDrag = airAngularDrag;
             }
         }
+
+        public void UpdateWaterheight(float height)
+        {
+            waterHeight = height;
+        }
     }
 }
