@@ -27,6 +27,14 @@ namespace FroggyJump.Input
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""67f4cbda-02bc-454d-8d4b-df39347db2d5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -62,6 +70,17 @@ namespace FroggyJump.Input
                     ""action"": ""MoveActions"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""52bdf700-41b1-4235-91a5-e8c714c2a2bf"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -71,6 +90,7 @@ namespace FroggyJump.Input
             // PlayerController
             m_PlayerController = asset.FindActionMap("PlayerController", throwIfNotFound: true);
             m_PlayerController_MoveActions = m_PlayerController.FindAction("MoveActions", throwIfNotFound: true);
+            m_PlayerController_Jump = m_PlayerController.FindAction("Jump", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -121,11 +141,13 @@ namespace FroggyJump.Input
         private readonly InputActionMap m_PlayerController;
         private IPlayerControllerActions m_PlayerControllerActionsCallbackInterface;
         private readonly InputAction m_PlayerController_MoveActions;
+        private readonly InputAction m_PlayerController_Jump;
         public struct PlayerControllerActions
         {
             private @InputCharacterController m_Wrapper;
             public PlayerControllerActions(@InputCharacterController wrapper) { m_Wrapper = wrapper; }
             public InputAction @MoveActions => m_Wrapper.m_PlayerController_MoveActions;
+            public InputAction @Jump => m_Wrapper.m_PlayerController_Jump;
             public InputActionMap Get() { return m_Wrapper.m_PlayerController; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -138,6 +160,9 @@ namespace FroggyJump.Input
                     @MoveActions.started -= m_Wrapper.m_PlayerControllerActionsCallbackInterface.OnMoveActions;
                     @MoveActions.performed -= m_Wrapper.m_PlayerControllerActionsCallbackInterface.OnMoveActions;
                     @MoveActions.canceled -= m_Wrapper.m_PlayerControllerActionsCallbackInterface.OnMoveActions;
+                    @Jump.started -= m_Wrapper.m_PlayerControllerActionsCallbackInterface.OnJump;
+                    @Jump.performed -= m_Wrapper.m_PlayerControllerActionsCallbackInterface.OnJump;
+                    @Jump.canceled -= m_Wrapper.m_PlayerControllerActionsCallbackInterface.OnJump;
                 }
                 m_Wrapper.m_PlayerControllerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -145,6 +170,9 @@ namespace FroggyJump.Input
                     @MoveActions.started += instance.OnMoveActions;
                     @MoveActions.performed += instance.OnMoveActions;
                     @MoveActions.canceled += instance.OnMoveActions;
+                    @Jump.started += instance.OnJump;
+                    @Jump.performed += instance.OnJump;
+                    @Jump.canceled += instance.OnJump;
                 }
             }
         }
@@ -152,6 +180,7 @@ namespace FroggyJump.Input
         public interface IPlayerControllerActions
         {
             void OnMoveActions(InputAction.CallbackContext context);
+            void OnJump(InputAction.CallbackContext context);
         }
     }
 }
