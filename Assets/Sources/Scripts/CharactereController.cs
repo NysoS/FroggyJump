@@ -75,6 +75,7 @@ namespace FroggyJump
                 rb.AddForce(moveDirection * force * Time.deltaTime, ForceMode.Impulse);
                 rb.AddForceAtPosition(Vector3.up * upForce, transform.position);
             }
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x,-2.3f,2.3f),transform.position.y,transform.position.z);
          
         }
         public override void Jump(InputAction.CallbackContext ctx)
