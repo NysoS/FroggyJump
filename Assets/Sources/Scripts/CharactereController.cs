@@ -70,12 +70,15 @@ namespace FroggyJump
 
         private void MoveSystem()
         {
-            if (moveDirection != Vector3.zero)
+            if (GameModeManager.Instance.isGamePlayed)
             {
-                rb.AddForce(moveDirection * force * Time.deltaTime, ForceMode.Impulse);
-                rb.AddForceAtPosition(Vector3.up * upForce, transform.position);
+                if (moveDirection != Vector3.zero)
+                {
+                    rb.AddForce(moveDirection * force * Time.deltaTime, ForceMode.Impulse);
+                    rb.AddForceAtPosition(Vector3.up * upForce, transform.position);
+                }
+                transform.position = new Vector3(Mathf.Clamp(transform.position.x,-2.3f,2.3f),transform.position.y,transform.position.z);
             }
-            transform.position = new Vector3(Mathf.Clamp(transform.position.x,-2.3f,2.3f),transform.position.y,transform.position.z);
          
         }
         public override void Jump(InputAction.CallbackContext ctx)

@@ -9,13 +9,8 @@ using UnityEngine;
 
 namespace FroggyJump
 {
-    public class River : MonoBehaviour
+    public class Obstacle : Actor
     {
-        private void Awake()
-        {
-            
-        }
-
         // Start is called before the first frame update
         void Start()
         {
@@ -25,17 +20,15 @@ namespace FroggyJump
         // Update is called once per frame
         void Update()
         {
-            if (GameModeManager.Instance.isGamePlayed)
-            {
-                transform.Translate(Vector3.back * RiverManager.Instance.GetSpeedScrolling() * Time.deltaTime);
-            }
+        
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnCollisionEnter(Collision collision)
         {
-            if(other.tag == CharactereController.TAG_PLAYER)
+            if(collision.gameObject.tag.Contains("Player"))
             {
-                RiverManager.Instance.UpdateMap();
+                Actor.OnDetectionHandler(this.gameObject,collision.gameObject.GetComponent<Actor>(),Charactere.DIEMETHOD);
+                GameModeManager.Instance.isGamePlayed = false;
             }
         }
     }

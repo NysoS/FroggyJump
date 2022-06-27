@@ -21,5 +21,6 @@ namespace FroggyJump
         }
 
         public virtual void OnDetected(GameObject source, Actor target, string callback) { }
+
     }
 }

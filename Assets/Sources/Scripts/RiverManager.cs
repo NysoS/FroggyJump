@@ -45,7 +45,10 @@ namespace FroggyJump
         // Update is called once per frame
         void Update()
         {
-            scrolling += speedScrolling * Time.deltaTime;
+            if (GameModeManager.Instance.isGamePlayed)
+            {
+                scrolling += speedScrolling * Time.deltaTime;
+            }
         }
 
         public void UpdateMap()
