@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace FroggyJump
 {
     public class River : MonoBehaviour
     {
+        public event Action onSpawning;
         private void Awake()
         {
             
@@ -36,6 +38,7 @@ namespace FroggyJump
             if(other.tag == CharactereController.TAG_PLAYER)
             {
                 RiverManager.Instance.UpdateMap();
+                onSpawning?.Invoke();
             }
         }
     }

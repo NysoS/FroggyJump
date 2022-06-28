@@ -38,6 +38,8 @@ namespace FroggyJump
         [SerializeField]
         private float jumpValue = 1f;
 
+        [SerializeField]
+        private float clampPosition;
         private bool canJump = true;
 
         void Awake() {
@@ -77,7 +79,7 @@ namespace FroggyJump
                     rb.AddForce(moveDirection * force * Time.deltaTime, ForceMode.Impulse);
                     rb.AddForceAtPosition(Vector3.up * upForce, transform.position);
                 }
-                transform.position = new Vector3(Mathf.Clamp(transform.position.x,-2.3f,2.3f),transform.position.y,transform.position.z);
+                transform.position = new Vector3(Mathf.Clamp(transform.position.x,-clampPosition, clampPosition),transform.position.y,transform.position.z);
             }
          
         }
